@@ -2,14 +2,21 @@
 <html>
   <head>
     <title>ProStripeOnRails</title>
+    <%= tag :meta, name: 'stripe-public-key',
+    content: ENV['STRIPE_PUBLIC_KEY'] %>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'https://www.w3schools.com/w3css/4/w3.css', 'https://fonts.googleapis.com/css?family=Raleway', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', media: 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
     <%= yield %>
+
+    <%= javascript_include_tag 'application', 'https://js.stripe.com/v2/' %>
   </body>
 </html>

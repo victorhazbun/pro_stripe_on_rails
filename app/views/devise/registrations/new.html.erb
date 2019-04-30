@@ -1,0 +1,26 @@
+<div class="w3-container w3-light-grey" style="padding:128px 16px">
+
+  <h3 class="w3-center">Sign up</h3>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <%= f.email_field :email, autofocus: true, class: 'w3-input w3-border', placeholder: 'Email' %>
+
+      <%= f.password_field :password, class: 'w3-input w3-border', placeholder: 'Password' %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %>
+
+      <%= f.password_field :password_confirmation, class: 'w3-input w3-border', placeholder: 'Password Confirmation' %>
+
+      <hr>
+
+      <%= f.submit 'SIGN UP', class: 'w3-button w3-black' %>
+    </div>
+  <% end %>
+
+  <hr>
+
+  <%= render "devise/shared/links" %>
+</div>

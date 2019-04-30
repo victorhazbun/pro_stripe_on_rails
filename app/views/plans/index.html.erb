@@ -1,0 +1,7 @@
+<h2>Plans</h2>
+<% @plans.each do |plan| %>
+  <h4><%= plan.name %></h4>
+  <p><%= plan.description %></p>
+  <p><%= humanized_money_with_symbol(plan.price) %></p>
+  <%= link_to("Subscribe to #{plan.name.titleize} Plan", new_plan_subscription_path(plan)) %>
+<% end %>

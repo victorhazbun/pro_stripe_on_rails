@@ -1,0 +1,23 @@
+<div class="w3-container w3-light-grey" style="padding:128px 16px">
+
+  <h3 class="w3-center">Log in</h3>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.email_field :email, autofocus: true, class: 'w3-input w3-border', placeholder: 'Email' %>
+
+    <%= f.password_field :password, class: 'w3-input w3-border', placeholder: 'Email' %>
+
+    <% if devise_mapping.rememberable? %>
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    <% end %>
+
+    <hr>
+
+    <%= f.submit 'LOG IN', class: 'w3-button w3-black' %>
+  <% end %>
+
+  <hr>
+
+  <%= render 'devise/shared/links' %>
+</div>
