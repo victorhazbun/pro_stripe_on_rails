@@ -1,6 +1,6 @@
 module PaymentGateway
   class BaseService
-    protected def client
+    def self.client
       @client ||= PaymentGateway::Client.new
     end
   end

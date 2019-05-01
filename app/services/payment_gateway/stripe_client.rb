@@ -1,38 +1,41 @@
-require 'payment_gateway/service_error'
+require 'payment_gateway_errors/service_error'
 
 module PaymentGateway
   class StripeClient
-    def lookup_customer(identifier: )
+    def lookup_customer(identifier:)
       handle_client_error do
-        @lookup_customer ||= Stripe::Customer.retreive(identifier)
+        @lookup_customer ||= Stripe::Customer.retrieve(identifier)
       end
     end
 
-    def lookup_plan(identifier: )
+    def lookup_plan(identifier:)
       handle_client_error do
-        @lookup_plan ||= Stripe::Plan.retreive(identifier)
+        @lookup_plan ||= Stripe::Plan.retrieve(identifier)
       end
     end
 
-    def lookup_event(identifier: )
+    def lookup_event(identifier:)
       handle_client_error do
-        @lookup_event ||= Stripe::Event.retreive(identifier)
+        @lookup_event ||= Stripe::Event.retrieve(identifier)
       end
     end
 
-    def create_customer!(options={})
+    def create_customer!(source:, email:)
       handle_client_error do
-        Stripe::Customer.create(email: options[:email])
+        Stripe::Customer.create(
+          source: source,
+          email: email
+        )
       end
     end
 
-    def create_plan!(product_name, options={})
+    def create_plan!(currency:, interval:, product_name:, id:, amount:)
       handle_client_error do
         Stripe::Plan.create(
-          id: options[:id],
-          amount: options[:amount],
-          currency: options[:currency] || 'usd',
-          interval: options[:interval] || 'month',
+          id: id,
+          amount: amount,
+          currency: currency,
+          interval: interval,
           product: {
             name: product_name
           }
@@ -40,20 +43,20 @@ module PaymentGateway
       end
     end
 
-    def create_subscription!(customer: , plan: , source: )
-      handle_client_error do
-        customer.subscriptions.create(
-          source: source,
+    def create_subscription!(customer:, plan:)
+      Stripe::Subscription.create(
+        customer: customer.id,
+        items: [
           plan: plan.id
-        )
-      end
+        ]
+      )
     end
 
-    private def handle_client_error(message=nil, &block)
+    private def handle_client_error(message = nil, &block)
       begin
         yield
       rescue Stripe::StripeError => e
-        raise PaymentGateway::StripeClientError.new(e.message, exception_message: e.message)
+        raise PaymentGatewayErrors::StripeClientError.new(e.message, exception_message: e.message)
       end
     end
   end

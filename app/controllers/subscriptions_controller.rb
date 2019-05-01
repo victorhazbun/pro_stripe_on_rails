@@ -1,6 +1,7 @@
-require 'payment_gateway/service_error'
+require 'payment_gateway_errors/service_error'
+
 class SubscriptionsController < ApplicationController
-  rescue_from PaymentGateway::CreateSubscriptionServiceError do |e|
+  rescue_from PaymentGatewayErrors::CreateSubscriptionServiceError do |e|
     redirect_to root_path, alert: e.message
   end
 
@@ -15,17 +16,13 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    service = PaymentGateway::CreateSubscriptionService.new(
+    PaymentGateway::CreateSubscriptionService.execute(
       user: current_user,
       plan: @plan,
-      token: params[:payment_gateway_token])
-    if service.execute && service.success
-      redirect_to plan_subscription_path(@plan,
-        service.subscription),
-        notice: "Your subscription has been created."
-    else
-      render :new
-    end
+      source: params[:payment_gateway_token]
+    )
+    flash[:notice] = I18n.t('notice.subscription_created')
+    redirect_to root_path
   end
 
   private

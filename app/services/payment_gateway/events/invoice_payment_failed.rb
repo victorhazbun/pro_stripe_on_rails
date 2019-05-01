@@ -10,8 +10,7 @@ module PaymentGateway
       end
 
       private def get_payment_gateway_event(payment_gateway_event)
-        get_plan_service = PaymentGateway::GetEventService.new(payment_gateway_event.id)
-        get_plan_service.execute
+        PaymentGateway::GetEventService.execute(payment_gateway_event_identifier: payment_gateway_event.id)
       end
     end
   end

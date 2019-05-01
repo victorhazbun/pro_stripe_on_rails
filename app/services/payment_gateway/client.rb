@@ -1,4 +1,4 @@
-require 'payment_gateway/service_error'
+require 'payment_gateway_errors/service_error'
 
 module PaymentGateway
   class Client
@@ -12,7 +12,7 @@ module PaymentGateway
       begin
         external_client.send(*args, &block)
       rescue => e
-        raise PaymentGateway::ClientError.new(e.message, exception_message: e.message)
+        raise PaymentGatewayErrors::ClientError.new(e.message, exception_message: e.message)
       end
     end
   end
