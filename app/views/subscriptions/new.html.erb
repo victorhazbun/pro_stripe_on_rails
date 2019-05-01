@@ -1,22 +1,23 @@
-<%= form_tag plan_subscription_path(@plan), id: "subscription-form" do %>
-  <div class="card-fields">
+<div class="w3-container w3-light-grey" style="padding:128px 16px">
+
+  <h3 class="w3-center">Subscribe to <%= @plan.name %> (<%= humanized_money_with_symbol(@plan.price) %>)</h3>
+
+  <%= form_tag plan_subscriptions_path(@plan), id: "subscription-form" do %>
+
     <span class="subscription-errors"></span>
 
-    <label>
-      <span>Card Number</span>
-      <input value="4242 4242 4242 4242" type="text" size="20" data-stripe="number"/>
-    </label>
+    <input type="text" size="20" data-stripe="number" class="w3-input w3-border" placeholder="Card Number"/>
 
-    <label>
-      <span>CVC</span>
-      <input value="123" type="text" size="4" data-stripe="cvc"/>
-    </label>
+    <input type="text" size="4" data-stripe="cvc" class="w3-input w3-border" placeholder="CVC"/>
 
     <label>
       <span>Expiration</span>
-      <input value="12" type="text" size="2" data-stripe="exp-month"/>
-      <input value="2020" type="text" size="4" data-stripe="exp-year"/>
+      <input type="text" size="6" data-stripe="exp-month" placeholder="Month"/>
+      <input type="text" size="5" data-stripe="exp-year" placeholder="Year"/>
     </label>
-  </div>
-  <button type="submit">Submit Payment</button>
-<% end %>
+
+    <hr>
+
+    <button type="submit" class="w3-button w3-black">SUBSCRIBE</button>
+  <% end %>
+</div>

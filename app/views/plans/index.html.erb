@@ -1,7 +1,22 @@
-<h2>Plans</h2>
-<% @plans.each do |plan| %>
-  <h4><%= plan.name %></h4>
-  <p><%= plan.description %></p>
-  <p><%= humanized_money_with_symbol(plan.price) %></p>
-  <%= link_to("Subscribe to #{plan.name.titleize} Plan", new_plan_subscription_path(plan)) %>
-<% end %>
+<!-- Plan Section -->
+<div class="w3-container w3-center w3-dark-grey">
+  <h2>PLANS</h2>
+  <p class="w3-large">Choose a pricing plan that fits your needs.</p>
+  <div class="w3-row-padding" >
+    <% @plans.each do |plan| %>
+      <div class="w3-third w3-section">
+        <ul class="w3-ul w3-white w3-hover-shadow">
+          <li class="w3-black w3-xlarge w3-padding-32"><%= plan.name %></li>
+          <li class="w3-padding-16"><%= plan.description %></li>
+          <li class="w3-padding-16">
+            <h2 class="w3-wide"><%= humanized_money_with_symbol(plan.price) %></h2>
+            <span class="w3-opacity">per month</span>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <%= link_to("Subscribe", new_plan_subscription_path(plan), class: 'w3-button w3-black w3-padding-large') %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
